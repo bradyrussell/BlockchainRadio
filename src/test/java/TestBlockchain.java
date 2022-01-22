@@ -37,7 +37,7 @@ public class TestBlockchain {
                 .setHashPreviousBlock(Hash.getSHA512Bytes("blockchain radio"))
                 .setBlockHeight(0)
                 .setDifficultyTarget(1)
-                .setAudio(Files.readAllBytes(Path.of("C:\\Users\\brady\\Desktop\\untitled.ogg")), keyPair);
+                .setAudio(Files.readAllBytes(Path.of("whitenoise.ogg")), keyPair);
 
         System.out.println("Begin mining at difficulty "+candidate.getBlockHeader().DifficultyTarget);
 
@@ -90,7 +90,7 @@ public class TestBlockchain {
                 .calculateHashPreviousBlock(bs)
                 .calculateBlockHeight(bs)
                 .calculateDifficultyTarget(bs)
-                .setAudio(Files.readAllBytes(Path.of("C:\\Users\\brady\\Desktop\\untitled.ogg")), keyPair);
+                .setAudio(Files.readAllBytes(Path.of("whitenoise.ogg")), keyPair);
 
         System.out.println("Begin mining at difficulty "+candidate.getBlockHeader().DifficultyTarget);
 

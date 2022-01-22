@@ -48,7 +48,7 @@ public class TestSerialization {
 
     @Test
     void TestBlockSerialization() throws IOException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, SignatureException, InvalidKeyException, InvalidKeySpecException {
-        byte[] bytes = Files.readAllBytes(Path.of("C:\\Users\\brady\\Desktop\\untitled.ogg"));
+        byte[] bytes = Files.readAllBytes(Path.of("whitenoise.ogg"));
         KeyPair keyPair = Keys.makeKeyPair();
 
         Block block = new Block();
@@ -94,7 +94,7 @@ public class TestSerialization {
                 .setNonce(Integer.MIN_VALUE)
                 .setDescription("BlockBuilder test")
                 .setMinerComment()
-                .setAudio(Files.readAllBytes(Path.of("C:\\Users\\brady\\Desktop\\untitled.ogg")), keyPair);
+                .setAudio(Files.readAllBytes(Path.of("whitenoise.ogg")), keyPair);
 
         while(Hash.getHashDifficulty(candidate.getBlockHeader().getHash()) < 2) {
             candidate.setNonce(candidate.getBlockHeader().Nonce+1);
