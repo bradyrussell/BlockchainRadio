@@ -114,7 +114,6 @@ public class BlockchainStorageInMemory implements BlockchainStorage {
         blocks.put(BytesUtil.base64Encode(block.getHeader().getHash()), block);
         while(blocksByHeight.size() < block.getHeader().BlockHeight + 1) blocksByHeight.add(null);
         blocksByHeight.set(block.getHeader().BlockHeight, block);
-
         return true;
     }
 

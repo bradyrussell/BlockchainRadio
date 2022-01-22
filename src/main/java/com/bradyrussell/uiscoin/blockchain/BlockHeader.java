@@ -202,7 +202,7 @@ public class BlockHeader implements BlockchainSerializable, BlockchainVerifiable
             }
         }
 
-        if(descriptionLength > 0) {
+        if(descriptionLength >= 0) {
             byte[] trimmedDescription = new byte[descriptionLength];
             System.arraycopy(descriptionBytes, 0, trimmedDescription, 0, trimmedDescription.length);
             descriptionBytes = trimmedDescription;
@@ -221,7 +221,7 @@ public class BlockHeader implements BlockchainSerializable, BlockchainVerifiable
             }
         }
 
-        if(minerCommentLength > 0) {
+        if(minerCommentLength >= 0) {
             byte[] trimmedMinerComment = new byte[minerCommentLength];
             System.arraycopy(minerCommentBytes, 0, trimmedMinerComment, 0, trimmedMinerComment.length);
             minerCommentBytes = trimmedMinerComment;
@@ -283,11 +283,11 @@ public class BlockHeader implements BlockchainSerializable, BlockchainVerifiable
     public String toString() {
         return "BlockHeader{" +
                 "Version=" + Version +
-                ", HashPreviousBlock=" + Arrays.toString(HashPreviousBlock) +
-                ", HashMerkleRoot=" + Arrays.toString(HashMerkleRoot) +
-                ", AudioHash=" + Arrays.toString(AudioHash) +
-                ", ContentSignature=" + Arrays.toString(ContentSignature) +
-                ", SignaturePublicKey=" + Arrays.toString(SignaturePublicKey) +
+                ", HashPreviousBlock=" + BytesUtil.base64Encode(HashPreviousBlock) +
+                ", HashMerkleRoot=" + BytesUtil.base64Encode(HashMerkleRoot) +
+                ", AudioHash=" + BytesUtil.base64Encode(AudioHash) +
+                ", ContentSignature=" + BytesUtil.base64Encode(ContentSignature) +
+                ", SignaturePublicKey=" + BytesUtil.base64Encode(SignaturePublicKey) +
                 ", Time=" + Time +
                 ", DifficultyTarget=" + DifficultyTarget +
                 ", Nonce=" + Nonce +
