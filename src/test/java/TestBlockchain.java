@@ -72,7 +72,7 @@ public class TestBlockchain {
         bs.close();
     }
 
-    @Test// @Disabled
+    @Test @Disabled
     void TestBlockchain() throws InvalidAlgorithmParameterException, NoSuchAlgorithmException, IOException, SignatureException, InvalidKeyException {
         BlockchainStorage bs = new BlockchainStorageFlatfile("blockchaindb");
         bs.open();
@@ -90,7 +90,7 @@ public class TestBlockchain {
                 .calculateHashPreviousBlock(bs)
                 .calculateBlockHeight(bs)
                 .calculateDifficultyTarget(bs)
-                .setAudio(Files.readAllBytes(Path.of("C:\\Users\\brady\\Desktop\\ttfaf.ogg")), keyPair);
+                .setAudio(Files.readAllBytes(Path.of("whitenoise.ogg")), keyPair);
 
         System.out.println("Begin mining at difficulty "+candidate.getBlockHeader().DifficultyTarget);
 
