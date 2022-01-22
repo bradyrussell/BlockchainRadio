@@ -4,8 +4,8 @@ import com.bradyrussell.uiscoin.Keys;
 import com.bradyrussell.uiscoin.blockchain.BlockBuilder;
 import com.bradyrussell.uiscoin.storage.BlockchainStorage;
 import com.bradyrussell.uiscoin.storage.BlockchainStorageFlatfile;
-import com.bradyrussell.uiscoin.storage.BlockchainStorageInMemory;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.security.*;
 import java.time.Instant;
 
 public class TestBlockchain {
-    @Test
+    @Test @Disabled
     void TestCreateGenesisBlock() throws InvalidAlgorithmParameterException, NoSuchAlgorithmException, IOException, SignatureException, InvalidKeyException {
         BlockchainStorage bs = new BlockchainStorageFlatfile("blockchaindb");
         bs.open();
@@ -72,7 +72,7 @@ public class TestBlockchain {
         bs.close();
     }
 
-    @Test
+    @Test @Disabled
     void TestBlockchain() throws InvalidAlgorithmParameterException, NoSuchAlgorithmException, IOException, SignatureException, InvalidKeyException {
         BlockchainStorage bs = new BlockchainStorageFlatfile("blockchaindb");
         bs.open();

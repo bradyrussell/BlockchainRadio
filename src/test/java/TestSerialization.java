@@ -96,7 +96,7 @@ public class TestSerialization {
                 .setMinerComment()
                 .setAudio(Files.readAllBytes(Path.of("C:\\Users\\brady\\Desktop\\untitled.ogg")), keyPair);
 
-        while(Hash.getHashDifficulty(candidate.getBlockHeader().getHash()) < 3) {
+        while(Hash.getHashDifficulty(candidate.getBlockHeader().getHash()) < 2) {
             candidate.setNonce(candidate.getBlockHeader().Nonce+1);
         }
         System.out.println(BytesUtil.base64Encode(candidate.getBlockHeader().getHash()));

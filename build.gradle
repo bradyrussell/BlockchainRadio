@@ -1,19 +1,91 @@
 plugins {
     id 'java'
+    id 'maven-publish'
+    id 'signing'
 }
 
-group 'org.example'
+group 'com.bradyrussell'
 version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+
+    maven {
+        url "https://repo.bradyrussell.com/repository/bradyrussell-release/"
+    }
+
+    maven {
+        url "https://repo.bradyrussell.com/repository/bradyrussell-snapshot/"
+    }
+}
+
+publishing {
+    publications {
+        BlockchainRadio(MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            url = version.endsWith('SNAPSHOT') ? "https://repo.bradyrussell.com/repository/bradyrussell-snapshot/" : "https://repo.bradyrussell.com/repository/bradyrussell-release/"
+            credentials {
+                username = repoUsername
+                password = repoPassword
+            }
+        }
+    }
+}
+
+sourceSets.main.java.srcDirs = ['src/main/java']
+sourceSets.test.java.srcDirs = ['src/test/java']
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation 'org.jetbrains:annotations:22.0.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+}
+
+jar {
+    manifest {
+        attributes  'Automatic-Module-Name': 'com.bradyrussell.blockchainradio'
+    }
 }
 
 test {
     useJUnitPlatform()
+    maxHeapSize = '1G'
 }
+
+task copyDependencies(type: Copy) {
+    from configurations.runtimeClasspath
+    into 'dependencies'
+}
+
+task copyJar(type: Copy) {
+    dependsOn("jar", "javadocJar", "sourcesJar")
+    from layout.buildDirectory.dir("libs")
+    into 'jar'
+}
+
+task copyJavadoc(type: Copy) {
+    dependsOn("javadoc")
+    from layout.buildDirectory.dir("docs")
+    into "docs"
+}
+
+task preCommit() {
+    dependsOn("clean", "test", "javadoc", "copyJavadoc")
+}
+
+// post commit (Jenkins):
+//gradle clean test javadoc jar javadocJar sourcesJar copyJar copyJavadoc copyDependencies publish
