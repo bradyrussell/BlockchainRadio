@@ -53,6 +53,12 @@ public class Keys {
         return new KeyPair(getPublicKeyFromPrivateKey(privateKey), privateKey);
     }
 
+    public static KeyPair getKeypairFromPrivateKey(byte[] privateKeyBytes) throws GeneralSecurityException {
+        KeyFactory keyFactory = KeyFactory.getInstance("EC");
+        ECPrivateKey privateKey = (ECPrivateKey) keyFactory.generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes));
+        return new KeyPair(getPublicKeyFromPrivateKey(privateKey), privateKey);
+    }
+
     public static class SignedData {
         public final byte[] publicKey;
         public final byte[] signature;

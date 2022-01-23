@@ -101,4 +101,27 @@ public class TestSerialization {
         }
         System.out.println(BytesUtil.base64Encode(candidate.getBlockHeader().getHash()));
     }
+
+    @Test
+    void TestBlockBuilderFromBlock() throws IOException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+        KeyPair keyPair = Keys.makeKeyPair();
+
+        BlockBuilder candidate = new BlockBuilder()
+                .setVersion()
+                .setTime(Instant.now().getEpochSecond())
+                .setBlockHeight(0)
+                .setDifficultyTarget(3)
+                .setNonce(Integer.MIN_VALUE)
+                .setDescription("BlockBuilder test")
+                .setMinerComment()
+                .setAudio(Files.readAllBytes(Path.of("whitenoise.ogg")), keyPair);
+
+        Block block = candidate.getBlock();
+
+        Block block1 = BlockBuilder.fromBlock(block).getBlock();
+
+        System.out.println(BytesUtil.bytesToHex(block.getHeader().serialize()));
+        System.out.println(BytesUtil.bytesToHex(block1.getHeader().serialize()));
+        Assertions.assertArrayEquals(block.serialize(), block1.serialize());
+    }
 }

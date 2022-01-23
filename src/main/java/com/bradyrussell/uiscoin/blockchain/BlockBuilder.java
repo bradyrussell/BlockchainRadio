@@ -121,4 +121,22 @@ public class BlockBuilder {
     public BlockBuilder setMinerComment() {
         return setMinerComment("");
     }
+
+    public static BlockBuilder fromBlock(Block block) {
+        BlockBuilder blockBuilder = new BlockBuilder();
+        blockBuilder.setAudio(block.getAudio());
+        blockBuilder.setVersion(block.getHeader().Version);
+        blockBuilder.setHashPreviousBlock(block.getHeader().HashPreviousBlock);
+        blockBuilder.setHashMerkleRoot(block.getHeader().HashMerkleRoot);
+        blockBuilder.getBlockHeader().AudioHash = block.getHeader().AudioHash; // already set by setAudio, but we want to allow copying the block exactly
+        blockBuilder.getBlockHeader().ContentSignature = block.getHeader().ContentSignature;
+        blockBuilder.getBlockHeader().SignaturePublicKey = block.getHeader().SignaturePublicKey;
+        blockBuilder.setTime(block.getHeader().Time);
+        blockBuilder.setDifficultyTarget(block.getHeader().DifficultyTarget);
+        blockBuilder.setNonce(block.getHeader().Nonce);
+        blockBuilder.setBlockHeight(block.getHeader().BlockHeight);
+        blockBuilder.getBlockHeader().setDescriptionBytes(block.getHeader().getDescriptionBytes());
+        blockBuilder.getBlockHeader().setMinerCommentBytes(block.getHeader().getMinerCommentBytes());
+        return blockBuilder;
+    }
 }
